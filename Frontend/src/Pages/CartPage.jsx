@@ -11,7 +11,6 @@ export default function CartPage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // JWT token only
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -19,13 +18,13 @@ export default function CartPage() {
       setLoading(false);
       return;
     }
-
     fetch("http://localhost:3000/api/cart", {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
       .then(data => {
         setCartItems(data.items || []);
+        setSubtotal(data.subtotal || 0);
         setLoading(false);
       })
       .catch(err => {
@@ -36,16 +35,12 @@ export default function CartPage() {
   }, [token]);
 
   useEffect(() => {
-    let total = 0;
     let count = 0;
-    cartItems.forEach(item => {
-      total += item.price * item.qty;
-      count += item.qty;
-    });
-    setSubtotal(total);
+    cartItems.forEach(item => { count += item.qty; });
     setItemCount(count);
   }, [cartItems]);
 
+  // Update quantity and subtotal from backend response!
   const updateQty = (itemId, qty) => {
     if (qty < 1) qty = 1;
     fetch("http://localhost:3000/api/cart/update", {
@@ -53,10 +48,10 @@ export default function CartPage() {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ itemId, qty })
     })
-      .then(() => {
-        setCartItems(prev =>
-          prev.map(item => item.id === itemId ? { ...item, qty } : item)
-        );
+      .then(res => res.json())
+      .then(data => {
+        setCartItems(data.cart.items || []);
+        setSubtotal(data.subtotal || 0);
       })
       .catch(err => console.error('Update failed', err));
   };
@@ -67,8 +62,10 @@ export default function CartPage() {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ itemId })
     })
-      .then(() => {
-        setCartItems(prev => prev.filter(item => item.id !== itemId));
+      .then(res => res.json())
+      .then(data => {
+        setCartItems(data.cart.items || []);
+        setSubtotal(data.subtotal || 0);
       })
       .catch(err => console.error('Delete failed', err));
   };
@@ -80,7 +77,6 @@ export default function CartPage() {
       <Navbar />
       <div className="w-[90%] max-w-[900px] mx-auto my-10 md:my-20 bg-white p-6 md:p-10 rounded-lg shadow-lg">
         <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-gray-800">Shopping Cart</h1>
-
         {!token ? (
           <p className="text-center text-lg text-gray-600 mt-6">Please login to view your cart.</p>
         ) : cartItems.length === 0 ? (
@@ -98,7 +94,6 @@ export default function CartPage() {
                     <div className="text-lg md:text-xl font-bold my-1 text-gray-800">₹{item.price.toFixed(2)}</div>
                   </div>
                 </div>
-
                 <div className="flex items-center space-x-3 md:space-x-4 flex-wrap justify-center md:justify-end w-full md:w-auto">
                   <div className="flex items-center border border-gray-300 rounded-md">
                     <button onClick={() => updateQty(item.id, item.qty - 1)} className="px-3 py-1 text-gray-700 hover:bg-gray-100 rounded-l-md transition-colors">-</button>
@@ -111,12 +106,10 @@ export default function CartPage() {
                 </div>
               </div>
             ))}
-
             <div className="border-t pt-6 mt-6 text-right">
               <div className="text-xl font-semibold text-gray-800">
                 Subtotal ({itemCount} items): <strong className="text-blue-600">₹{subtotal.toFixed(2)}</strong>
               </div>
-
               <button className="bg-blue-600 text-white px-8 py-3 mt-6 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed" disabled={itemCount === 0} onClick={() => navigate('/checkout')}>
                 Proceed to Pay
               </button>

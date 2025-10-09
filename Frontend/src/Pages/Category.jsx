@@ -17,7 +17,6 @@ const Category = () => {
       setLoading(false);
       return;
     }
-
     fetch(`http://localhost:3000/api/products/${category}`)
       .then((res) => res.json())
       .then((data) => {
@@ -32,22 +31,23 @@ const Category = () => {
       });
   }, [category]);
 
+  // Cart add API with JWT
   const addToCart = async (id, name, price, image) => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
+    const token = localStorage.getItem("token");
+    if (!token) {
       alert("You must be logged in to add items to cart.");
       return;
     }
-
     const item = { id, name, price, image, qty: 1 };
-
     try {
       const res = await fetch("http://localhost:3000/api/cart/add", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, item }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ item }),
       });
-
       const data = await res.json();
       alert(data.msg || (res.ok ? "Added to cart!" : "Failed to add to cart."));
     } catch (err) {
@@ -63,7 +63,6 @@ const Category = () => {
       </div>
     );
   }
-
   if (error) {
     return <p className="text-center text-red-600 mt-10">{error}</p>;
   }
@@ -73,7 +72,6 @@ const Category = () => {
       <Navbar />
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-6 text-center capitalize">{category} Collection</h2>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {products.length === 0 ? (
             <p className="col-span-full text-center text-gray-500">No products found.</p>
@@ -88,15 +86,12 @@ const Category = () => {
                   alt={product.name}
                   className="w-full h-90 object-cover"
                 />
-
                 <div className="p-4 space-y-1">
                   <h3 className="font-semibold text-base text-gray-800">{product.name}</h3>
                   <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p>
-
                   <div className="text-indigo-600 font-semibold text-lg mt-2">
                     ₹{product.price}
                   </div>
-
                   <button
                     className="w-full mt-3 bg-indigo-600 text-white text-sm py-2 rounded hover:bg-indigo-700 transition"
                     onClick={() =>
