@@ -26,7 +26,9 @@ const orderSchema = new mongoose.Schema(
     name: String,
     mobile: String,
     address: String,
-    instructions: String,  // <-- here
+    instructions: String,
+    returnReason: String,
+    returnStatus: String, // "Requested", "Pickup Scheduled", etc.
   },
   { timestamps: true }
 );
