@@ -8,7 +8,7 @@ const logoUrl =
 export default function ResetPasswordOTP() {
   const [otp, setOTP] = useState("");
   const [msg, setMsg] = useState("");
-  const [timer, setTimer] = useState(120); // 2 minutes
+  const [timer, setTimer] = useState(60); // 2 minutes
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const params = new URLSearchParams(useLocation().search);
@@ -70,7 +70,7 @@ export default function ResetPasswordOTP() {
       const data = await res.json();
       if (res.ok) {
         setMsg("🔁 OTP resent to your email.");
-        setTimer(120);
+        setTimer(60);
       } else setMsg(data.msg || "Failed to resend OTP.");
     } catch {
       setMsg("⚠️ Server error. Try again.");

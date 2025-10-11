@@ -9,7 +9,8 @@ export const sendResetPasswordOTP = async (email, otp) => {
   });
   const html = `
     <div style="background:#fff;border:2px solid #FFCC00;padding:1.5rem 2.5rem;border-radius:18px;max-width:400px;margin:2rem auto;">
-      <img src="https://i.postimg.cc/bJCVGD0W/Urban-Tales.png" alt="UrbanTales" style="width:140px;margin-bottom:14px;"/>
+      <img src="https://drive.google.com/uc?export=view&id=1XxU_zf3_ZBDjuEWqGorEYUgBTzjoyaW_
+" alt="UrbanTales" style="width:140px;margin-bottom:14px;"/>
       <h2 style="color:#070A52;">Password Reset Request</h2>
       <div style="font-size:16px;margin:1rem 0;">Your OTP is:</div>
       <div style="font-size:36px;font-weight:bold;letter-spacing:0.6rem;color:#FFCC00;margin:8px 0 18px;font-family:monospace;">${otp}</div>
