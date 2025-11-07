@@ -18,10 +18,14 @@ export default function SellerLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e) => setFormData((p) => ({
-    ...p, [e.target.name]: e.target.value
-  }));
+  // Handle form input change
+  const handleChange = (e) =>
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
 
+  // Handle email/password login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -41,17 +45,25 @@ export default function SellerLogin() {
     }
   };
 
+  // Handle Google Sign-In login
   const handleGoogleLogin = async () => {
     setError("");
+    setLoading(true);
     try {
       const result = await signInWithPopup(sellerAuth, sellerProvider);
       const user = result.user;
+      // Get the Firebase ID Token
+      const tokenId = await user.getIdToken();
       const payload = {
+        tokenId, // Must send this!
         email: user.email,
         fullName: user.displayName,
         googleId: user.uid,
       };
-      const { data } = await axios.post(`${BASE_API_URL}/api/sellers/auth/google-login`, payload);
+      const { data } = await axios.post(
+        `${BASE_API_URL}/api/sellers/auth/google-login`,
+        payload
+      );
       localStorage.setItem("sellerToken", data.token);
       navigate("/seller/dashboard");
     } catch (err) {
@@ -68,6 +80,8 @@ export default function SellerLogin() {
           "Google login failed"
         );
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,7 +94,7 @@ export default function SellerLogin() {
         className="w-full max-w-md"
       >
         <div className="bg-white rounded-3xl shadow-2xl p-10 w-full">
-          {/* Logo */}
+          {/* Logo and header */}
           <div className="text-center mb-6">
             <img src={logoUrl} className="mx-auto w-28 mb-4" alt="UrbanTales" />
             <h2 className="text-3xl font-bold text-[#070A52] mb-2">
@@ -146,6 +160,7 @@ export default function SellerLogin() {
                   type="button"
                   className="absolute right-3 top-3.5 text-gray-400 hover:text-gray-600"
                   onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
                 >
                   {showPassword ? (
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,6 +212,7 @@ export default function SellerLogin() {
             type="button"
             onClick={handleGoogleLogin}
             className="w-full flex items-center justify-center gap-3 py-3 bg-white border-2 border-gray-300 rounded-xl font-semibold hover:bg-gray-50 hover:border-gray-400 transition"
+            disabled={loading}
           >
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"
