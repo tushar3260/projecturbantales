@@ -16,7 +16,7 @@ import sellerOrderRoutes from './routes/sellerOrderRoutes.js';
 import sellerAnalyticsRoutes from './routes/sellerAnalyticsRoutes.js';
 import sellerNotificationRoutes from './routes/sellerNotificationRoutes.js';
 import razorpayRoutes from './routes/razorpay.js';
-
+import sellerAuthRoutes from './routes/sellerAuthRoutes.js';
 
 import reviewRoutes from './routes/review.routes.js';
 
@@ -43,7 +43,7 @@ app.use("/api/sellers/analytics", sellerAnalyticsRoutes);
 app.use("/api/sellers/notifications", sellerNotificationRoutes);
 
 app.use('/api/razorpay', razorpayRoutes);
-
+app.use('/api/sellers/auth', sellerAuthRoutes);
 app.use('/api/reviews', reviewRoutes);
 
 
