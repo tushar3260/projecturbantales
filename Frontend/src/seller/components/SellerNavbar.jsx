@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useSellerAuth } from "../context/SellerAuthContext";
-import logo from "../../assets/UrbanTales.PNG";
+import logo from "../../assets/UrbanTales.png";
 import {
   AppBar, Toolbar, Button, Avatar, Chip, Box, Menu, MenuItem, Tooltip, useMediaQuery
 } from "@mui/material";

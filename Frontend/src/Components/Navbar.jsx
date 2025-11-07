@@ -16,6 +16,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import urbanTalesLogo from "../assets/UrbanTales.png";
 
+
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   {
