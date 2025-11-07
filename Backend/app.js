@@ -16,7 +16,7 @@ import sellerOrderRoutes from './routes/sellerOrderRoutes.js';
 import sellerAnalyticsRoutes from './routes/sellerAnalyticsRoutes.js';
 import sellerNotificationRoutes from './routes/sellerNotificationRoutes.js';
 import razorpayRoutes from './routes/razorpay.js';
-import sellerAuthRoutes from './routes/sellerAuthRoutes.js';
+
 
 import reviewRoutes from './routes/review.routes.js';
 
