@@ -14,9 +14,11 @@
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.19.2",
+    "express-fileupload": "^1.5.2",
     "firebase-admin": "^12.7.0",
     "framer-motion": "^12.23.24",
     "jsonwebtoken": "^9.0.2",
