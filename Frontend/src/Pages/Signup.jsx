@@ -41,7 +41,9 @@ const Signup = () => {
         `${BASE_API_URL}/api/users/signup`,
         formData
       );
-      alert("Signup successful. Please sign in.");
+      alert(
+        "Signup successful 🎉\nA welcome email has been sent to your registered email ID. (Check your Spam folder if not visible in Inbox)"
+      );
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
@@ -64,6 +66,13 @@ const Signup = () => {
             >
               Already have an account? Sign In
             </a>
+
+            {/* Info message */}
+            <div className="text-sm text-gray-600 bg-yellow-50 border border-yellow-300 p-3 rounded mb-4">
+              💡 Once you sign up, you’ll receive a <b>Welcome Email</b> from
+              the UrbanTales team. Please check your <b>Spam</b> or{" "}
+              <b>Promotions</b> folder if you don’t see it in your Inbox.
+            </div>
 
             {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
