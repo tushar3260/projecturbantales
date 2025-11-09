@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 
 const BASE_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
-const logoUrl = "https://drive.google.com/uc?export=view&id=1XxU_zf3_ZBDjuEWqGorEYUgBTzjoyaW_";
+const logoUrl = "https://res.cloudinary.com/dhmw4b5wq/image/upload/v1762673652/UrbanTales_korjrm.png";
 
 // Simple email format validation
 function validateEmail(email) {

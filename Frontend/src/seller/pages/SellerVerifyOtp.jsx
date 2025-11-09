@@ -4,7 +4,7 @@ import { HashLoader } from "react-spinners";
 import { motion } from "framer-motion";
 
 const logoUrl =
-  "https://drive.google.com/uc?export=view&id=1XxU_zf3_ZBDjuEWqGorEYUgBTzjoyaW_";
+  "https://res.cloudinary.com/dhmw4b5wq/image/upload/v1762673652/UrbanTales_korjrm.png";
 
 export default function SellerVerifyOtp() {
   const [otp, setOTP] = useState("");

@@ -8,7 +8,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 export const sendResetPasswordOTP = async (email, otp) => {
   const html = `
     <div style="background:#fff;border:2px solid #FFCC00;padding:1.5rem 2.5rem;border-radius:18px;max-width:400px;margin:2rem auto;">
-      <img src="https://drive.google.com/uc?export=view&id=1ptxc1NQ93JfKa3cdtOh-DsUUgnDwHXBy" 
+      <img src="https://res.cloudinary.com/dhmw4b5wq/image/upload/v1762673652/UrbanTales_korjrm.png" 
      alt="UrbanTales Logo"  style="width:140px;margin-bottom:14px;"/>
       <h2 style="color:#070A52;">Password Reset Request</h2>
       <div style="font-size:16px;margin:1rem 0;">Your OTP is:</div>
