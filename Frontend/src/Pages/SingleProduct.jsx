@@ -1,3 +1,9 @@
+// Path: src/Pages/SingleProduct.jsx
+// Notes:
+// - Mobile thumbnails appear UNDER the main image (scrollable row)
+// - Desktop thumbnails remain on the LEFT
+// - Image box made more compact and sits higher: max-h adjusted + smaller padding
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
@@ -572,7 +578,7 @@ export default function SingleProduct() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
               {/* Left: Images (sticky on lg) */}
-              <div className="flex gap-4 lg:sticky lg:top-20" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+              <div className="flex flex-col lg:flex-row gap-4 lg:sticky lg:top-16" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
                 {/* Thumbnails (left on lg) */}
                 <div className="hidden lg:flex flex-col gap-3 overflow-y-auto max-h-[500px] scrollbar-thin scrollbar-thumb-gray-300">
                   {mediaItems.map((item, i) => (
@@ -593,12 +599,9 @@ export default function SingleProduct() {
                   ))}
                 </div>
 
-                {/* Mobile thumbnails (top row) */}
-                <div className="lg:hidden absolute -mt-6"></div>
-
                 {/* Main Image with Zoom */}
                 <div
-                  className="flex-1 flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 relative overflow-hidden"
+                  className="flex-1 flex items-center justify-center bg-white border border-gray-200 rounded-lg p-3 relative overflow-hidden max-h-[360px] md:max-h-[450px] lg:max-h-[500px]"
                 >
                   <button
                     onClick={() => setWishlist(!wishlist)}
@@ -642,6 +645,34 @@ export default function SingleProduct() {
                       onTouchStart={(e) => e.stopPropagation()}
                     />
                   )}
+                </div>
+
+                {/* ✅ Mobile thumbnails (under the main image) */}
+                <div className="lg:hidden -mt-2">
+                  <div className="flex gap-2 mt-3 overflow-x-auto pb-2 scrollbar-thin">
+                    {mediaItems.map((item, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setSelected(i)}
+                        className={`w-16 h-16 border rounded-md overflow-hidden flex-shrink-0 transition-all ${
+                          selected === i ? 'border-blue-500 border-2' : 'border-gray-200'
+                        }`}
+                      >
+                        {item.type === "image" ? (
+                          <img
+                            src={item.url}
+                            alt={`Thumbnail ${i + 1}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="relative w-full h-full bg-gray-200 flex items-center justify-center text-[10px]">
+                            VIDEO
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -1061,3 +1092,4 @@ export default function SingleProduct() {
     </>
   );
 }
+
