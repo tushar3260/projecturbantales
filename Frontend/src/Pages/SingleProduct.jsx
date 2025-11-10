@@ -12,7 +12,7 @@ import {
   FaThumbsUp,
   FaReply,
 } from "react-icons/fa";
-import { BASE_API_URL } from "@/utils/constants";
+import { BASE_API_URL } from "@/utils/constants.js";
 import { toast } from "react-hot-toast";
 
 const StarRating = ({ rating, size = "text-yellow-500" }) => {
